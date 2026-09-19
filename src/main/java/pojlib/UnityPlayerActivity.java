@@ -51,6 +51,7 @@ import pojlib.util.FileUtil;
 import pojlib.util.Logger;
 import pojlib.util.download.DownloadManager;
 import pojlib.util.download.DownloadUtils;
+import pojlib.visor.VisorBridge;
 
 public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLifecycleEvents, GrabListener
 {
@@ -86,6 +87,9 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
     // Setup activity layout
     @Override protected void onCreate(Bundle savedInstanceState) {
         Constants.initConstants(this);
+        VisorBridge.setRuntime("visor");
+        VisorBridge.setRuntimeMode("replacement");
+        VisorBridge.initialize(this);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
@@ -346,7 +350,7 @@ public class UnityPlayerActivity extends ActivityGroup implements IUnityPlayerLi
 
     @Override
     public void onGrabState(boolean isGrabbing) {
-        mUnityPlayer.post(()->updateGrabState(isGrabbing));
+        mUnityPlayer.post(() -> updateGrabState(isGrabbing));
     }
 
     // private TouchEventProcessor pickEventProcessor(boolean isGrabbing) {
